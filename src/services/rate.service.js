@@ -8,8 +8,8 @@ var requestOptions = {
   headers: myHeaders,
 };
 
-export const rateServiceConertTo = () => {
-  return fetch("https://api.apilayer.com/fixer/convert?to={to}&from={from}&amount={amount}", requestOptions)
+export const rateServiceConertTo = (from,to,amount) => {
+  return fetch(`https://api.apilayer.com/fixer/convert?to=${to}&from=${from}&amount=${amount}`, requestOptions)
 };
 
 export const rateServiceSymbols = () => {
