@@ -18,7 +18,13 @@ export const Page1 = () => {
   const [rate, setRate] = useState<any>();
   const [show, setShow] = useState(false);
   const value = useSelector((state: RootState) => state.currency.symbols);
-
+  const changePlace = () => {
+    setcurrency(prev => {
+      return {...prev,from:prev.to,to:prev.from}
+    })
+    console.log(currency)
+  }
+  
   const onchangehandler = (e: any) => {
     const { value, name } = e.target;
     setcurrency((prev: any) => {
@@ -65,13 +71,13 @@ export const Page1 = () => {
             </select>
           </div>
           <div>
-            <div className={classes.img}>
+            <div className={classes.img} onClick={changePlace}>
               <img src={arrow} alt="arrow" />
             </div>
           </div>
           <div className={classes.input}>
             <p>To</p>
-            <select name="to" value={currency?.to} onChange={onchangehandler}>
+            <select name="to" value={currency?.to} onClick={onchangehandler}>
               {currencies.map((currency) => (
                 <option key={currency}>{currency}</option>
               ))}
