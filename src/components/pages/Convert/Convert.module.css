@@ -79,3 +79,7 @@
   color: rgb(99, 99, 248);
   background-color: white;
 }
+.text{
+  margin-left: 50px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

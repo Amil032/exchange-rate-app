@@ -11,9 +11,24 @@
 }
 .navbar {
   width: 100%;
-  height: 50px;
-  background-color: blue;
+  height: 70px;
+  background-color:purple;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.button{
+  height: 40px;
+  margin-right: 10px;
+  background-color: rgb(99, 99, 248);
+  color: white;
+  border:none;
+  border-radius: 5px;
+  width: 150px;
+  font-weight: bold;
+}
+.button:hover{
+  border: 1px solid rgb(99, 99, 248) ;
+  color: rgb(99, 99, 248);
+  background-color: white;
 }

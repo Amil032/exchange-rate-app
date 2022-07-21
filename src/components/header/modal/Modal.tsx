@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import classes from "./Modal.module.css";
 import {
   symbolsAction,
@@ -34,7 +34,7 @@ export const Modal = () => {
       <div
         className={classes.backDrop}
         onClick={() => {
-          console.log("clicked");
+          dispatch(modalHandlerAction())
         }}
       ></div>
       <div className={classes.modal}>

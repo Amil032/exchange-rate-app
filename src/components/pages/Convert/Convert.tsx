@@ -1,9 +1,5 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
-import {
-  rateServiceLatest,
-  rateServiceConertTo,
-} from "../../../services/rate.service";
-import { Header } from "../../header/Header";
+import { useState } from "react";
+import { rateServiceConertTo } from "../../../services/rate.service";
 import classes from "./Convert.module.css";
 import arrow from "../../../assests/arrow-left-right.svg";
 import { useSelector } from "react-redux";
@@ -22,9 +18,7 @@ export const Page1 = () => {
   const [rate, setRate] = useState<any>();
   const [show, setShow] = useState(false);
   const value = useSelector((state: RootState) => state.currency.symbols);
-  // useEffect(() => {
-  //   console.log(rateServiceLatest('USD',['AZN','EUR']))
-  // },[])
+
   const onchangehandler = (e: any) => {
     const { value, name } = e.target;
     setcurrency((prev: any) => {
@@ -32,7 +26,7 @@ export const Page1 = () => {
     });
   };
   const convertHandler = () => {
-    rateServiceConertTo(currency?.from, currency?.to, currency?.amount)
+    !Object.values(currency).includes('')&&rateServiceConertTo(currency?.from, currency?.to, currency?.amount)
       .then((response) => response.json())
       .then((result) => {
         setRate(result);
@@ -77,7 +71,7 @@ export const Page1 = () => {
           </div>
           <div className={classes.input}>
             <p>To</p>
-            <select name="to" value={currency?.from} onChange={onchangehandler}>
+            <select name="to" value={currency?.to} onChange={onchangehandler}>
               {currencies.map((currency) => (
                 <option>{currency}</option>
               ))}
@@ -86,9 +80,9 @@ export const Page1 = () => {
         </div>
 
         <div className={classes.button}>
-          <div style={{ flexGrow: 1, backgroundColor: "red" }}>
+          <div style={{ flexGrow: 1}}>
             {show && (
-              <div>
+              <div className={classes.text} >
                 <h4>
                   1{rate?.query?.from}={rate?.info.rate} {rate?.query?.to}
                 </h4>
@@ -96,12 +90,14 @@ export const Page1 = () => {
                   {rate?.query?.amount} {rate?.query?.from}={rate?.result}
                   {rate?.query?.to}
                 </h3>
+                {Object.values(currency).includes('') && <p style={{ color: 'red'}}>Please fill all fields</p>}
               </div>
             )}
           </div>
-
           <button onClick={convertHandler}>Convert</button>
+          
         </div>
+        
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ import React, { useEffect, useState } from "react";
 import { rateServiceLatest } from "../../../services/rate.service";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import classes from './Rates.module.css'
+import classes from "./Rates.module.css";
 export const Page2 = () => {
   const [latestRates, setLatestRates] = useState<any>({});
   const [currencies, setCurrencies] = useState("");
@@ -22,7 +22,7 @@ export const Page2 = () => {
   const base = useSelector(
     (state: RootState) => state.currency.nationalCurrency
   );
-  console.log(base,'base')
+  console.log(base, "base");
   useEffect(() => {
     rateServiceLatest(
       currencies ? currencies : base ? base : [],
@@ -64,20 +64,29 @@ export const Page2 = () => {
           />
         )}
       />
-      <div>
-        <div>
-          <p> { currencies ? currencies : base ? base : ''}</p>
+      <div
+        style={{
+          display: "flex",
+          
+          
+          marginTop: "20px",
+        }}
+      >
+        <div
+          style={{ width: "500px", color: "white", backgroundColor: "#1c3651" }}
+        >
+          <p style={{ marginLeft: "10px" }}>
+            {currencies ? currencies : base ? base : ""} Currencies full list
+          </p>
         </div>
       </div>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{maxWidth:500}}>
         <Table sx={{ maxWidth: 500 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
               <TableCell align="left">Currency</TableCell>
               <TableCell align="right">Code</TableCell>
               <TableCell align="right">Rate</TableCell>
-              {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -94,6 +103,6 @@ export const Page2 = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      </div>
+    </div>
   );
 };
