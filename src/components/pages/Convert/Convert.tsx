@@ -39,59 +39,54 @@ export const Page1 = () => {
         console.log(result);
       })
       .catch((error) => console.log("error", error));
-    setShow(true)
+    setShow(true);
   };
   const currencies =
     Object.keys(value).length > 0 ? Object.keys(value.symbols) : [];
   console.log(currency);
   return (
-    <Header>
-      <div className={classes.convert}>
-        <h1>The World's Trusted Currency Authority</h1>
-        <div className={classes.inputContainer}>
-          <div className={classes.inputWrapper}>
-            <div className={classes.input}>
-              <p>Amount</p>
-              <input
-                type="number"
-                name="amount"
-                value={currency?.amount}
-                onChange={onchangehandler}
-              />
-            </div>
-            <div className={classes.input}>
-              <p>From</p>
-              <select
-                name="from"
-                onChange={onchangehandler}
-                value={currency?.from}
-              >
-                {currencies.map((currency) => (
-                  <option>{currency}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <div className={classes.img}>
-                <img src={arrow} alt="arrow" />
-              </div>
-            </div>
-            <div className={classes.input}>
-              <p>To</p>
-              <select
-                name="to"
-                value={currency?.from}
-                onChange={onchangehandler}
-              >
-                {currencies.map((currency) => (
-                  <option>{currency}</option>
-                ))}
-              </select>
+    <div className={classes.convert}>
+      <h1>The World's Trusted Currency Authority</h1>
+      <div className={classes.inputContainer}>
+        <div className={classes.inputWrapper}>
+          <div className={classes.input}>
+            <p>Amount</p>
+            <input
+              type="number"
+              name="amount"
+              value={currency?.amount}
+              onChange={onchangehandler}
+            />
+          </div>
+          <div className={classes.input}>
+            <p>From</p>
+            <select
+              name="from"
+              onChange={onchangehandler}
+              value={currency?.from}
+            >
+              {currencies.map((currency) => (
+                <option>{currency}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <div className={classes.img}>
+              <img src={arrow} alt="arrow" />
             </div>
           </div>
+          <div className={classes.input}>
+            <p>To</p>
+            <select name="to" value={currency?.from} onChange={onchangehandler}>
+              {currencies.map((currency) => (
+                <option>{currency}</option>
+              ))}
+            </select>
+          </div>
+        </div>
 
-          <div className={classes.button} onClick={convertHandler}>
-            <div style={{flexGrow:1,backgroundColor:'red'}}>
+        <div className={classes.button}>
+          <div style={{ flexGrow: 1, backgroundColor: "red" }}>
             {show && (
               <div>
                 <h4>
@@ -103,12 +98,11 @@ export const Page1 = () => {
                 </h3>
               </div>
             )}
-            </div>
-            
-            <button>Convert</button>
           </div>
+
+          <button onClick={convertHandler}>Convert</button>
         </div>
       </div>
-    </Header>
+    </div>
   );
 };

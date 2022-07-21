@@ -1,6 +1,6 @@
 import axios from "axios";
 var myHeaders = new Headers();
-myHeaders.append("apikey", "9UqoOhiPilJxtW67gDuXFqCKahmK8QV7");
+myHeaders.append("apikey", "0otp5X1vWTLiTXYEVWkxdj1lZboWUQSP");
 
 var requestOptions = {
   method: "GET",
@@ -28,10 +28,8 @@ export const rateServiceLatest =async (base,symbols) => {
 //   headers: myHeaders
 // };
 
-  const request = await fetch(`https://api.apilayer.com/fixer/latest?symbols=${symbols}&base=${base}`, requestOptions)
-  const response = await request.text();
-  const data=await response
-  return await data
+  return fetch(`https://api.apilayer.com/fixer/latest?symbols=${symbols}&base=${base}`, requestOptions)
+  
   
 }
 // .then(response => response.text())

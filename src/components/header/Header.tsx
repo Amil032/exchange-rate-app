@@ -13,18 +13,16 @@ export const Header = ({ children }: Props) => {
     (state: RootState) => state.currency.visibility
   );
   const navigate = useNavigate();
-
+  console.log(children)
   return (
     <div className={classes.header}>
       <div className={classes.navbar}>
-        {visibility && <Modal />}
         <h1 style={{ color: "white" }}>Currency Rates</h1>
         <Button variant="outlined" onClick={() => navigate("/page2")}>
           All rates
         </Button>
       </div>
-
-      {children}
+      {visibility ? <Modal /> :<div> { children }</div>}
     </div>
   );
 };

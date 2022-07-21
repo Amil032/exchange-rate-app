@@ -6,13 +6,13 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 // } ;
 export interface rateState {
   symbols: any,
-  nationalCurrency: {}|null,
+  nationalCurrency: string|null,
   visibility:boolean
 }
 
 const initialState: rateState = {
   symbols: {},
-  nationalCurrency: {},
+  nationalCurrency: '',
   visibility:true 
 
 }
@@ -28,7 +28,7 @@ export const currencySlice = createSlice({
       // immutable state based off those changes
       state.symbols={...action.payload}
     },
-    nationalCurrencyAction: (state,action: PayloadAction<Object>) => {
+    nationalCurrencyAction: (state,action: PayloadAction<string>) => {
       state.nationalCurrency =action.payload
     },
     modalHandlerAction: (state) => {

@@ -56,7 +56,7 @@ export const Modal = () => {
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Choose a country"
+              label="Choose a currency"
               inputProps={{
                 ...params.inputProps,
                 autoComplete: "new-password", // disable autocomplete and autofill
