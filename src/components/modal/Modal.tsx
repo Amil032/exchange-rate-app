@@ -1,17 +1,17 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./Modal.module.css";
 import {
   symbolsAction,
   modalHandlerAction,
   nationalCurrencyAction,
-} from "../../../store/slices/rateSlice";
+} from "../../store/slices/rateSlice";
 import { useDispatch } from "react-redux";
-import { rateServiceSymbols } from "../../../services/rate.service";
+import { rateServiceSymbols } from "../../services/rate.service";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
-import { Autocomplete, Box, Button, TextField } from "@mui/material";
+import { RootState } from "../../store/store";
+import { Autocomplete, Button, TextField } from "@mui/material";
 export const Modal = () => {
-  const [currencies, setCurrencies] = useState("");
+  const [currencies, setCurrencies] = useState("USD");
   const dispatch = useDispatch();
   const symbols = useSelector((state: RootState) => state.currency.symbols);
   useEffect(() => {
@@ -27,6 +27,7 @@ export const Modal = () => {
     dispatch(nationalCurrencyAction(currencies));
   };
   const cancleHandler = () => {
+    dispatch(nationalCurrencyAction('USD'));
     dispatch(modalHandlerAction());
   };
   return (
@@ -34,35 +35,20 @@ export const Modal = () => {
       <div
         className={classes.backDrop}
         onClick={() => {
-          dispatch(modalHandlerAction())
+          dispatch(modalHandlerAction());
         }}
       ></div>
       <div className={classes.modal}>
         <p className={classes.header}>Please Choose default rate</p>
         <Autocomplete
-          onInputChange={(e: React.SyntheticEvent, value: string) =>
-            setCurrencies(value)
-          }
-          id="country-select-demo"
-          sx={{ width: 300 }}
+          id="combo-box-demo"
           options={currency}
-          autoHighlight
-          getOptionLabel={(option) => option}
-          renderOption={(props, option) => (
-            <Box component="li" {...props}>
-              {option}
-            </Box>
-          )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Choose a currency"
-              inputProps={{
-                ...params.inputProps,
-                autoComplete: "new-password", // disable autocomplete and autofill
-              }}
-            />
-          )}
+          sx={{ width: 300 }}
+          onChange={(e: React.SyntheticEvent, value: any) =>
+            setCurrencies(value)
+          
+          }
+          renderInput={(params) => <TextField {...params} label="Currencies" />}
         />
         <div className={classes.button}>
           <div style={{ margin: "10px" }}>
@@ -72,7 +58,7 @@ export const Modal = () => {
           </div>
           <div style={{ margin: "10px" }}>
             <Button variant="outlined" color="error" onClick={cancleHandler}>
-              Cancel
+              Close
             </Button>
           </div>
         </div>

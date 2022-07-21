@@ -40,7 +40,7 @@ export const Page1 = () => {
   console.log(currency);
   return (
     <div className={classes.convert}>
-      <h1>The World's Trusted Currency Authority</h1>
+      <h1 className={classes.heading}>Currency Convertor</h1>
       <div className={classes.inputContainer}>
         <div className={classes.inputWrapper}>
           <div className={classes.input}>
@@ -60,7 +60,7 @@ export const Page1 = () => {
               value={currency?.from}
             >
               {currencies.map((currency) => (
-                <option>{currency}</option>
+                <option key={currency}>{currency}</option>
               ))}
             </select>
           </div>
@@ -73,7 +73,7 @@ export const Page1 = () => {
             <p>To</p>
             <select name="to" value={currency?.to} onChange={onchangehandler}>
               {currencies.map((currency) => (
-                <option>{currency}</option>
+                <option key={currency}>{currency}</option>
               ))}
             </select>
           </div>

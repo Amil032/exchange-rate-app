@@ -1,6 +1,7 @@
 import {
   Autocomplete,
   Box,
+  Button,
   Paper,
   Table,
   TableBody,
@@ -22,10 +23,21 @@ export const Page2 = () => {
   const base = useSelector(
     (state: RootState) => state.currency.nationalCurrency
   );
-  console.log(base, "base");
+  // const showCurrencyHandler = () => {
+  //   rateServiceLatest(
+  //     currencies ? currencies : base ? base : "USD",
+  //     Object.keys(symbols.symbols)
+  //   )
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //       setLatestRates(result.rates);
+  //       console.log(result);
+  //     })
+  //     .catch((error) => console.log("error", error));
+  // };
   useEffect(() => {
     rateServiceLatest(
-      currencies ? currencies : base ? base : [],
+      currencies ? currencies : base ? base : "USD",
       Object.keys(symbols.symbols)
     )
       .then((response) => response.json())
@@ -39,39 +51,28 @@ export const Page2 = () => {
     Object.keys(symbols).length > 0 ? Object.keys(symbols.symbols) : [];
   return (
     <div className={classes.rate}>
-      <Autocomplete
-        onInputChange={(e: React.SyntheticEvent, value: string) =>
-          setCurrencies(value)
-        }
-        id="country-select-demo"
-        sx={{ width: 300 }}
-        options={currency}
-        autoHighlight
-        getOptionLabel={(option) => option}
-        renderOption={(props, option) => (
-          <Box component="li" {...props}>
-            {option}
-          </Box>
-        )}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Choose a currency"
-            inputProps={{
-              ...params.inputProps,
-              autoComplete: "new-password", // disable autocomplete and autofill
-            }}
-          />
-        )}
-      />
-      <div
-        style={{
-          display: "flex",
-          
-          
-          marginTop: "20px",
-        }}
-      >
+      <div style={{ display: "flex" }}>
+        <Autocomplete
+          id="combo-box-demo"
+          options={currency}
+          sx={{ width: 300 }}
+          onChange={(e: React.SyntheticEvent, value: any) =>
+            setCurrencies(value)
+          }
+          renderInput={(params) => (
+            <TextField {...params} label="Select currency" />
+          )}
+        />
+        {/* <Button
+          variant="contained"
+          style={{ marginLeft: "10px" }}
+          onClick={showCurrencyHandler}
+        >
+          Show
+        </Button> */}
+      </div>
+
+      <div style={{ display: "flex", marginTop: "20px" }}>
         <div
           style={{ width: "500px", color: "white", backgroundColor: "#1c3651" }}
         >
@@ -80,7 +81,7 @@ export const Page2 = () => {
           </p>
         </div>
       </div>
-      <TableContainer component={Paper} sx={{maxWidth:500}}>
+      <TableContainer component={Paper} sx={{ maxWidth: 500 }}>
         <Table sx={{ maxWidth: 500 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>

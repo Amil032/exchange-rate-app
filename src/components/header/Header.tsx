@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import classes from "./Header.module.css";
 import type { RootState } from "../../store/store";
-import { Modal } from "./modal/Modal";
+import { Modal } from "../modal/Modal";
 import { useSelector } from "react-redux";
 
 type Props = {
