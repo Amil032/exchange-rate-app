@@ -16,26 +16,17 @@ import { rateServiceLatest } from "../../../services/rate.service";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import classes from "./Rates.module.css";
+import Spinner from "../../spinner/Spinner";
 export const Page2 = () => {
   const [latestRates, setLatestRates] = useState<any>({});
   const [currencies, setCurrencies] = useState("");
+  const [showSpinner, setShowSpinner] = useState(false);
   const symbols = useSelector((state: RootState) => state.currency.symbols);
   const base = useSelector(
     (state: RootState) => state.currency.nationalCurrency
   );
-  // const showCurrencyHandler = () => {
-  //   rateServiceLatest(
-  //     currencies ? currencies : base ? base : "USD",
-  //     Object.keys(symbols.symbols)
-  //   )
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       setLatestRates(result.rates);
-  //       console.log(result);
-  //     })
-  //     .catch((error) => console.log("error", error));
-  // };
   useEffect(() => {
+    setShowSpinner(true)
     rateServiceLatest(
       currencies ? currencies : base ? base : "USD",
       Object.keys(symbols.symbols)
@@ -43,7 +34,7 @@ export const Page2 = () => {
       .then((response) => response.json())
       .then((result) => {
         setLatestRates(result.rates);
-        console.log(result);
+        setShowSpinner(false)
       })
       .catch((error) => console.log("error", error));
   }, [currencies]);
@@ -63,15 +54,8 @@ export const Page2 = () => {
             <TextField {...params} label="Select currency" />
           )}
         />
-        {/* <Button
-          variant="contained"
-          style={{ marginLeft: "10px" }}
-          onClick={showCurrencyHandler}
-        >
-          Show
-        </Button> */}
       </div>
-
+      {showSpinner&&<Spinner/>}
       <div style={{ display: "flex", marginTop: "20px" }}>
         <div
           style={{ width: "500px", color: "white", backgroundColor: "#1c3651" }}

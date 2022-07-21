@@ -10,14 +10,20 @@ import { rateServiceSymbols } from "../../services/rate.service";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Autocomplete, Button, TextField } from "@mui/material";
+import Spinner from "../spinner/Spinner";
 export const Modal = () => {
   const [currencies, setCurrencies] = useState("USD");
+  const [showSpinner, setShowSpinner] = useState(false);
   const dispatch = useDispatch();
   const symbols = useSelector((state: RootState) => state.currency.symbols);
   useEffect(() => {
+    setShowSpinner(true)
     rateServiceSymbols()
       .then((response) => response.json())
-      .then((result) => dispatch(symbolsAction(result)))
+      .then((result) => {
+        setShowSpinner(false)
+        dispatch(symbolsAction(result))
+      })
       .catch((error) => console.log("error", error));
   }, []);
   let currency =
@@ -40,6 +46,7 @@ export const Modal = () => {
       ></div>
       <div className={classes.modal}>
         <p className={classes.header}>Please Choose default rate</p>
+        {showSpinner&&<Spinner/>}
         <Autocomplete
           id="combo-box-demo"
           options={currency}

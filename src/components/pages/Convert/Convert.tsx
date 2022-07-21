@@ -4,6 +4,7 @@ import classes from "./Convert.module.css";
 import arrow from "../../../assests/arrow-left-right.svg";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../store/store";
+import Spinner from "../../spinner/Spinner";
 interface currencyState {
   from: string;
   to: string;
@@ -17,14 +18,14 @@ export const Page1 = () => {
   });
   const [rate, setRate] = useState<any>();
   const [show, setShow] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
   const value = useSelector((state: RootState) => state.currency.symbols);
   const changePlace = () => {
-    setcurrency(prev => {
-      return {...prev,from:prev.to,to:prev.from}
-    })
-    console.log(currency)
-  }
-  
+    setcurrency((prev) => {
+      return { ...prev, from: prev.to, to: prev.from };
+    });
+  };
+
   const onchangehandler = (e: any) => {
     const { value, name } = e.target;
     setcurrency((prev: any) => {
@@ -32,13 +33,15 @@ export const Page1 = () => {
     });
   };
   const convertHandler = () => {
-    !Object.values(currency).includes('')&&rateServiceConertTo(currency?.from, currency?.to, currency?.amount)
-      .then((response) => response.json())
-      .then((result) => {
-        setRate(result);
-        console.log(result);
-      })
-      .catch((error) => console.log("error", error));
+    setShowSpinner(true);
+    !Object.values(currency).includes("") &&
+      rateServiceConertTo(currency?.from, currency?.to, currency?.amount)
+        .then((response) => response.json())
+        .then((result) => {
+          setRate(result);
+          setShowSpinner(false);
+        })
+        .catch((error) => console.log("error", error));
     setShow(true);
   };
   const currencies =
@@ -47,6 +50,7 @@ export const Page1 = () => {
   return (
     <div className={classes.convert}>
       <h1 className={classes.heading}>Currency Convertor</h1>
+      {showSpinner && <Spinner />}
       <div className={classes.inputContainer}>
         <div className={classes.inputWrapper}>
           <div className={classes.input}>
@@ -86,9 +90,9 @@ export const Page1 = () => {
         </div>
 
         <div className={classes.button}>
-          <div style={{ flexGrow: 1}}>
+          <div style={{ flexGrow: 1 }}>
             {show && (
-              <div className={classes.text} >
+              <div className={classes.text}>
                 <h4>
                   1{rate?.query?.from}={rate?.info.rate} {rate?.query?.to}
                 </h4>
@@ -96,14 +100,14 @@ export const Page1 = () => {
                   {rate?.query?.amount} {rate?.query?.from}={rate?.result}
                   {rate?.query?.to}
                 </h3>
-                {Object.values(currency).includes('') && <p style={{ color: 'red'}}>Please fill all fields</p>}
+                {Object.values(currency).includes("") && (
+                  <p style={{ color: "red" }}>Please fill all fields</p>
+                )}
               </div>
             )}
           </div>
           <button onClick={convertHandler}>Convert</button>
-          
         </div>
-        
       </div>
     </div>
   );
